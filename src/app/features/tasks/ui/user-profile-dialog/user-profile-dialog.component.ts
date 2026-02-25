@@ -49,15 +49,6 @@ import { AuthFacade } from '../../../../core/auth';
         <div class="profile-name">{{ u.name }}</div>
 
         <div class="profile-fields">
-          <div class="profile-field">
-            <div class="field-icon">
-              <mat-icon>badge</mat-icon>
-            </div>
-            <div class="field-content">
-              <span class="field-label">ID</span>
-              <span class="field-value">{{ u.id }}</span>
-            </div>
-          </div>
 
           <div class="profile-field">
             <div class="field-icon">

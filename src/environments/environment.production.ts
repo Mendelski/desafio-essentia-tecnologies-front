@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.example.com/api',
+  apiBaseUrl: 'https://todolist-api.example.com/api/v1',
 };
 

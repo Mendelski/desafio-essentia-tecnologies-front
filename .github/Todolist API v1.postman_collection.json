@@ -375,6 +375,55 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Task Activity Log",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/tasks/{{task_id}}/activity-log?start_date=&end_date=&cursor=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks",
+								"{{task_id}}",
+								"activity-log"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "",
+									"description": "Filter logs from this date (Y-m-d). Optional.",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "",
+									"description": "Filter logs until this date (Y-m-d). Must be >= start_date. Optional.",
+									"disabled": true
+								},
+								{
+									"key": "cursor",
+									"value": "",
+									"description": "Cursor for pagination. Use next_cursor or prev_cursor from the response meta.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

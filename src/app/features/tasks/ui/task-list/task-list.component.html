@@ -119,6 +119,16 @@
               <button
                 mat-icon-button
                 type="button"
+                class="action-history"
+                [attr.aria-label]="'View history of ' + task.title"
+                matTooltip="View history"
+                (click)="onViewHistory(task)"
+              >
+                <mat-icon>history</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                type="button"
                 class="action-edit"
                 [attr.aria-label]="'Edit ' + task.title"
                 matTooltip="Edit task"

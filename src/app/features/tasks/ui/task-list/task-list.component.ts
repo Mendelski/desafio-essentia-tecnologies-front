@@ -9,6 +9,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 
 import { Task, TaskStatus } from '../../domain';
 import { TaskFacade } from '../../application';
+import { TaskActivityLogDialogComponent } from '../task-activity-log-dialog';
 import { TaskFormDialogComponent } from '../task-form-dialog';
 
 /**
@@ -61,6 +62,13 @@ export class TaskListComponent implements OnInit {
     this.dialog.open(TaskFormDialogComponent, {
       data: { task },
       width: '400px',
+    });
+  }
+
+  protected onViewHistory(task: Task): void {
+    this.dialog.open(TaskActivityLogDialogComponent, {
+      data: { task },
+      width: '480px',
     });
   }
 

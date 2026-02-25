@@ -90,13 +90,14 @@ Base URL: `{{base_url}}/api/v1` (configured in environment)
 
 ### Tasks Endpoints
 
-| Method | Endpoint       | Auth Required | Query Params            | Body                                      | Response                                                  |
-|--------|----------------|---------------|-------------------------|-------------------------------------------|-----------------------------------------------------------|
-| GET    | `/tasks`       | Yes (Bearer)  | `status`, `page`        | -                                         | Paginated list of tasks                                   |
-| POST   | `/tasks`       | Yes (Bearer)  | -                       | `{ title, description?, status }`         | Created task                                              |
-| GET    | `/tasks/:id`   | Yes (Bearer)  | -                       | -                                         | Task details                                              |
-| PUT    | `/tasks/:id`   | Yes (Bearer)  | -                       | `{ title?, description?, status? }`       | Updated task                                              |
-| DELETE | `/tasks/:id`   | Yes (Bearer)  | -                       | -                                         | -                                                         |
+| Method | Endpoint                  | Auth Required | Query Params                          | Body                                      | Response                                                  |
+|--------|---------------------------|---------------|---------------------------------------|-------------------------------------------|-----------------------------------------------------------|
+| GET    | `/tasks`                  | Yes (Bearer)  | `status`, `page`                      | -                                         | Paginated list of tasks                                   |
+| POST   | `/tasks`                  | Yes (Bearer)  | -                                     | `{ title, description?, status }`         | Created task                                              |
+| GET    | `/tasks/:id`              | Yes (Bearer)  | -                                     | -                                         | Task details                                              |
+| PUT    | `/tasks/:id`              | Yes (Bearer)  | -                                     | `{ title?, description?, status? }`       | Updated task                                              |
+| DELETE | `/tasks/:id`              | Yes (Bearer)  | -                                     | -                                         | -                                                         |
+| GET    | `/tasks/:id/activity-log` | Yes (Bearer)  | `start_date`, `end_date`, `cursor`    | -                                         | Cursor-paginated activity log                             |
 
 ### Task Model
 
@@ -108,6 +109,40 @@ interface Task {
   status: 'pending' | 'completed';
   created_at: string; // ISO date
   updated_at: string; // ISO date
+}
+```
+
+### Activity Log Model
+
+```typescript
+interface ActivityLog {
+  id: string;
+  task_id: number;
+  user_id: number;
+  action: 'created' | 'updated' | 'completed' | 'deleted';
+  before: Record<string, unknown> | null;
+  after: Record<string, unknown> | null;
+  timestamp: string; // ISO date
+  metadata: {
+    ip: string;
+    user_agent: string;
+  };
+}
+
+interface PaginatedActivityLog {
+  data: ActivityLog[];
+  links: {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    path: string;
+    per_page: number;
+    next_cursor: string | null;
+    prev_cursor: string | null;
+  };
 }
 ```
 

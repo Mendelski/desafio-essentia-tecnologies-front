@@ -1,5 +1,5 @@
-import { PaginatedTasks, Task } from '../domain/task.model';
-import { PaginatedTasksDto, TaskDto } from './task.dto';
+import { PaginatedActivityLog, PaginatedTasks, Task, TaskActivityLog } from '../domain/task.model';
+import { PaginatedActivityLogDto, PaginatedTasksDto, TaskActivityLogDto, TaskDto } from './task.dto';
 
 /**
  * Mapper functions to convert between DTOs and domain models
@@ -22,6 +22,30 @@ export class TaskMapper {
       currentPage: dto.current_page,
       lastPage: dto.last_page,
       total: dto.total,
+    };
+  }
+
+  static toActivityLog(dto: TaskActivityLogDto): TaskActivityLog {
+    return {
+      id: dto.id,
+      taskId: dto.task_id,
+      userId: dto.user_id,
+      action: dto.action,
+      before: dto.before,
+      after: dto.after,
+      timestamp: new Date(dto.timestamp),
+      metadata: {
+        ip: dto.metadata.ip,
+        userAgent: dto.metadata.user_agent,
+      },
+    };
+  }
+
+  static toPaginatedActivityLog(dto: PaginatedActivityLogDto): PaginatedActivityLog {
+    return {
+      data: (dto.data ?? []).map((log) => TaskMapper.toActivityLog(log)),
+      nextCursor: dto.meta?.next_cursor ?? null,
+      prevCursor: dto.meta?.prev_cursor ?? null,
     };
   }
 }

@@ -23,6 +23,42 @@ export interface PaginatedTasksDto {
 }
 
 /**
+ * DTO for task activity log entry from API response
+ */
+export interface TaskActivityLogDto {
+  id: string;
+  task_id: number;
+  user_id: number;
+  action: string;
+  before: Record<string, unknown> | null;
+  after: Record<string, unknown> | null;
+  timestamp: string;
+  metadata: {
+    ip: string;
+    user_agent: string;
+  };
+}
+
+/**
+ * DTO for paginated activity log response with cursor pagination
+ */
+export interface PaginatedActivityLogDto {
+  data: TaskActivityLogDto[];
+  links: {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    path: string;
+    per_page: number;
+    next_cursor: string | null;
+    prev_cursor: string | null;
+  };
+}
+
+/**
  * DTO for creating a task
  */
 export interface CreateTaskDto {

@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 import { ApiClientService } from '../../../core/http/api-client.service';
-import { CreateTaskData, PaginatedTasks, Task, TaskFilter, UpdateTaskData } from '../domain/task.model';
-import { CreateTaskDto, PaginatedTasksDto, TaskDto, UpdateTaskDto } from './task.dto';
+import { ActivityLogFilter, CreateTaskData, PaginatedActivityLog, PaginatedTasks, Task, TaskFilter, UpdateTaskData } from '../domain/task.model';
+import { CreateTaskDto, PaginatedActivityLogDto, PaginatedTasksDto, TaskDto, UpdateTaskDto } from './task.dto';
 import { TaskMapper } from './task.mapper';
 
 /**
@@ -83,6 +83,28 @@ export class TaskApiService {
    */
   delete(id: number): Observable<void> {
     return this.apiClient.delete<void>(`/tasks/${id}`);
+  }
+
+  /**
+   * GET /tasks/:id/activity-log
+   * Returns activity log for a task with cursor pagination
+   */
+  getActivityLog(taskId: number, filter?: ActivityLogFilter): Observable<PaginatedActivityLog> {
+    const params: Record<string, string> = {};
+
+    if (filter?.startDate) {
+      params['start_date'] = filter.startDate;
+    }
+    if (filter?.endDate) {
+      params['end_date'] = filter.endDate;
+    }
+    if (filter?.cursor) {
+      params['cursor'] = filter.cursor;
+    }
+
+    return this.apiClient
+      .get<PaginatedActivityLogDto>(`/tasks/${taskId}/activity-log`, params)
+      .pipe(map((response) => TaskMapper.toPaginatedActivityLog(response)));
   }
 }
 

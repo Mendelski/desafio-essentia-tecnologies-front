@@ -68,7 +68,13 @@ export class ApiClientService {
       errorMessage = error.error.message;
     } else {
       // Server-side error
-      errorMessage = error.error?.message || error.message || errorMessage;
+      if (error.status === 404) {
+        errorMessage = 'Resource not found';
+      } else if (error.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
+      } else {
+        errorMessage = error.error?.message || error.message || errorMessage;
+      }
     }
 
     return throwError(() => new Error(errorMessage));

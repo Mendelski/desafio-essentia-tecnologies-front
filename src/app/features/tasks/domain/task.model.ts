@@ -13,6 +13,41 @@ export interface Task {
 export type TaskStatus = 'pending' | 'completed';
 
 /**
+ * Domain model representing a task activity log entry
+ */
+export interface TaskActivityLog {
+  id: string;
+  taskId: number;
+  userId: number;
+  action: string;
+  before: Record<string, unknown> | null;
+  after: Record<string, unknown> | null;
+  timestamp: Date;
+  metadata: {
+    ip: string;
+    userAgent: string;
+  };
+}
+
+/**
+ * Filter options for activity log
+ */
+export interface ActivityLogFilter {
+  startDate?: string;
+  endDate?: string;
+  cursor?: string;
+}
+
+/**
+ * Paginated activity log response with cursor pagination
+ */
+export interface PaginatedActivityLog {
+  data: TaskActivityLog[];
+  nextCursor: string | null;
+  prevCursor: string | null;
+}
+
+/**
  * Data required to create a new task
  */
 export interface CreateTaskData {

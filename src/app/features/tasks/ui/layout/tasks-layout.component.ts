@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatTooltip } from '@angular/material/tooltip';
 
 import { AuthFacade } from '../../../../core/auth';
 import { ThemeToggleComponent } from '../../../../shared';
+import { UserProfileDialogComponent } from '../user-profile-dialog';
 
 /**
  * Layout shell for authenticated pages.
@@ -33,10 +35,15 @@ import { ThemeToggleComponent } from '../../../../shared';
       <span class="spacer"></span>
 
       @if (user(); as u) {
-        <div class="user-info">
+        <button
+          type="button"
+          class="user-info"
+          matTooltip="View profile"
+          (click)="openProfile()"
+        >
           <mat-icon class="user-avatar">account_circle</mat-icon>
           <span class="user-name">{{ u.name }}</span>
-        </div>
+        </button>
       }
 
       <app-theme-toggle />
@@ -110,7 +117,19 @@ import { ThemeToggleComponent } from '../../../../shared';
       margin-right: 0.5rem;
       padding: 0.5rem 1rem;
       background: var(--mat-sys-surface-container-highest);
+      border: none;
       border-radius: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--mat-sys-primary-container);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--mat-sys-primary);
+        outline-offset: 2px;
+      }
     }
 
     .user-avatar {
@@ -154,8 +173,15 @@ import { ThemeToggleComponent } from '../../../../shared';
 export class TasksLayoutComponent {
   private readonly authFacade = inject(AuthFacade);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly user = this.authFacade.user;
+
+  protected openProfile(): void {
+    this.dialog.open(UserProfileDialogComponent, {
+      width: '420px',
+    });
+  }
 
   protected logout(): void {
     this.authFacade.logout();

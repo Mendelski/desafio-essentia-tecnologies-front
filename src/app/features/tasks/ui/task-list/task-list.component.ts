@@ -44,7 +44,7 @@ export class TaskListComponent implements OnInit {
   protected readonly isEmpty = this.taskFacade.isEmpty;
   protected readonly saving = this.taskFacade.saving;
   protected readonly filter = this.taskFacade.filter;
-  protected readonly total = this.taskFacade.total;
+  protected readonly displayedCount = this.taskFacade.displayedCount;
 
   ngOnInit(): void {
     this.taskFacade.loadTasks();

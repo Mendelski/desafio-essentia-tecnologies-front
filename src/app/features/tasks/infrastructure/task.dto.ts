@@ -23,6 +23,13 @@ export interface PaginatedTasksDto {
 }
 
 /**
+ * DTO for single task API response (wrapped in data)
+ */
+export interface SingleTaskResponseDto {
+  data: TaskDto;
+}
+
+/**
  * DTO for task activity log entry from API response
  */
 export interface TaskActivityLogDto {

@@ -5,12 +5,12 @@
       <div class="header-text">
         <h1>My Tasks</h1>
         <p class="task-count">
-          @if (total() === 0) {
+          @if (displayedCount() === 0) {
             No tasks yet
-          } @else if (total() === 1) {
+          } @else if (displayedCount() === 1) {
             1 task
           } @else {
-            {{ total() }} tasks
+            {{ displayedCount() }} tasks
           }
         </p>
       </div>

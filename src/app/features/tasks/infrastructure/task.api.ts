@@ -3,7 +3,7 @@ import { map, Observable } from 'rxjs';
 
 import { ApiClientService } from '../../../core/http/api-client.service';
 import { ActivityLogFilter, CreateTaskData, PaginatedActivityLog, PaginatedTasks, Task, TaskFilter, UpdateTaskData } from '../domain/task.model';
-import { CreateTaskDto, PaginatedActivityLogDto, PaginatedTasksDto, TaskDto, UpdateTaskDto } from './task.dto';
+import { CreateTaskDto, PaginatedActivityLogDto, PaginatedTasksDto, SingleTaskResponseDto, TaskDto, UpdateTaskDto } from './task.dto';
 import { TaskMapper } from './task.mapper';
 
 /**
@@ -41,8 +41,8 @@ export class TaskApiService {
    */
   get(id: number): Observable<Task> {
     return this.apiClient
-      .get<TaskDto>(`/tasks/${id}`)
-      .pipe(map((response) => TaskMapper.toTask(response)));
+      .get<SingleTaskResponseDto>(`/tasks/${id}`)
+      .pipe(map((response) => TaskMapper.toTask(response.data)));
   }
 
   /**
@@ -57,8 +57,8 @@ export class TaskApiService {
     };
 
     return this.apiClient
-      .post<TaskDto, CreateTaskDto>('/tasks', payload)
-      .pipe(map((response) => TaskMapper.toTask(response)));
+      .post<SingleTaskResponseDto, CreateTaskDto>('/tasks', payload)
+      .pipe(map((response) => TaskMapper.toTask(response.data)));
   }
 
   /**
@@ -73,8 +73,8 @@ export class TaskApiService {
     if (data.status !== undefined) payload.status = data.status;
 
     return this.apiClient
-      .put<TaskDto, UpdateTaskDto>(`/tasks/${id}`, payload)
-      .pipe(map((response) => TaskMapper.toTask(response)));
+      .put<SingleTaskResponseDto, UpdateTaskDto>(`/tasks/${id}`, payload)
+      .pipe(map((response) => TaskMapper.toTask(response.data)));
   }
 
   /**

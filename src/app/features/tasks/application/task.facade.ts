@@ -54,6 +54,7 @@ export class TaskFacade {
   readonly hasPagination = computed(() => this.lastPageSignal() > 1);
   readonly pendingTasks = computed(() => this.tasksSignal().filter((t) => t.status === 'pending'));
   readonly completedTasks = computed(() => this.tasksSignal().filter((t) => t.status === 'completed'));
+  readonly displayedCount = computed(() => this.tasksSignal().length);
 
   /**
    * Loads tasks from the API with optional filters
@@ -136,9 +137,18 @@ export class TaskFacade {
       .update(id, data)
       .pipe(
         tap((updatedTask) => {
-          this.tasksSignal.update((tasks) =>
-            tasks.map((task) => (task.id === id ? updatedTask : task))
-          );
+          const currentFilter = this.filterSignal();
+
+          // If there's an active status filter and the task no longer matches, remove it
+          if (currentFilter.status && updatedTask.status !== currentFilter.status) {
+            this.tasksSignal.update((tasks) => tasks.filter((task) => task.id !== id));
+          } else {
+            // Otherwise, update the task in place
+            this.tasksSignal.update((tasks) =>
+              tasks.map((task) => (task.id === id ? updatedTask : task))
+            );
+          }
+
           if (this.selectedTaskSignal()?.id === id) {
             this.selectedTaskSignal.set(updatedTask);
           }

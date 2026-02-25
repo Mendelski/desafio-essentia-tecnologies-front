@@ -1,6 +1,25 @@
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Architecture Rules:
+
+- Use feature-based structure.
+- Each feature must contain: domain, application, infrastructure and ui layers.
+- Components must NEVER call HttpClient directly.
+- All API communication must be isolated inside infrastructure layer.
+- Use a facade per feature to orchestrate state and API calls.
+- Use signals for state management.
+- Use computed() for derived state.
+- No business logic inside components.
+- No usage of any.
+- Always define DTO types separate from domain entities.
+- Map DTOs to domain models inside infrastructure layer.
+- Use ChangeDetectionStrategy.OnPush.
+- Use native control flow (@if, @for).
+- Use Reactive Forms only.
+- Always implement proper error handling and loading state.
+- Keep files small and single-responsibility.
+
 ## TypeScript Best Practices
 
 - Use strict type checking

@@ -16,8 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
 
-import { Task, TaskActivityLog } from '../../domain/task.model';
-import { TaskApiService } from '../../infrastructure/task.api';
+import { Task, TaskActivityLog } from '../../domain';
+import { TaskApiService } from '../../infrastructure';
 
 export interface TaskActivityLogDialogData {
   task: Task;

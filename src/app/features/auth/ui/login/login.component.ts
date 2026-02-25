@@ -8,7 +8,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import { AuthFacade } from '../../../../core/auth';
+import { AuthFacade } from '../../../../core';
 import { ThemeToggleComponent } from '../../../../shared';
 
 /**

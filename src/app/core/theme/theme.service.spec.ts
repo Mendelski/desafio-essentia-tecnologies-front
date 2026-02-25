@@ -103,7 +103,7 @@ describe('ThemeService', () => {
       service.toggle();
 
       // Flush the effects
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(localStorage.setItem).toHaveBeenCalledWith('app_theme', 'dark');
     });
@@ -159,7 +159,7 @@ describe('ThemeService', () => {
       service = TestBed.inject(ThemeService);
 
       // Trigger effect by running change detection
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(document.documentElement.classList.add).toHaveBeenCalledWith('dark');
     });
@@ -171,7 +171,7 @@ describe('ThemeService', () => {
       service = TestBed.inject(ThemeService);
 
       // Trigger effect by running change detection
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(document.documentElement.classList.remove).toHaveBeenCalledWith('dark');
     });

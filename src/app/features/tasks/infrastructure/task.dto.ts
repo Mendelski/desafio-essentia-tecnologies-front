@@ -1,4 +1,4 @@
-import { TaskStatus } from '../domain/task.model';
+import { TaskStatus } from '../domain';
 
 /**
  * DTO for task from API response

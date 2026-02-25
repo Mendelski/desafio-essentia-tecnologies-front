@@ -1,7 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError, EMPTY } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 import { AuthFacade } from './auth.facade';
 import { AuthApiService } from '../infrastructure/auth.api';

@@ -3,7 +3,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 
-import { ThemeService } from '../../../core/theme';
+import { ThemeService } from '../../../core';
 
 /**
  * Theme toggle button component.

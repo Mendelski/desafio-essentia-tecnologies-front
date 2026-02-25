@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { of, firstValueFrom } from 'rxjs';
 
 import { TaskApiService } from './task.api';
-import { ApiClientService } from '../../../core/http/api-client.service';
+import { ApiClientService } from '../../../core';
 import { PaginatedTasksDto, SingleTaskResponseDto, PaginatedActivityLogDto } from './task.dto';
 
 describe('TaskApiService', () => {

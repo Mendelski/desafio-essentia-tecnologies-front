@@ -1,12 +1,11 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { signal, WritableSignal } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { signal, WritableSignal, ANIMATION_MODULE_TYPE } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TaskListComponent } from './task-list.component';
-import { TaskFacade, TaskError } from '../../application/task.facade';
-import { Task, TaskFilter } from '../../domain/task.model';
+import { TaskFacade, TaskError } from '../../application';
+import { Task, TaskFilter } from '../../domain';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -75,8 +74,9 @@ describe('TaskListComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [TaskListComponent, NoopAnimationsModule],
+      imports: [TaskListComponent],
       providers: [
+        { provide: ANIMATION_MODULE_TYPE, useValue: 'NoopAnimations' },
         { provide: TaskFacade, useValue: taskFacadeMock },
         { provide: MatDialog, useValue: dialogMock },
       ],
@@ -210,9 +210,7 @@ describe('TaskListComponent', () => {
 
       fixture.detectChanges();
       await fixture.whenStable();
-
-      const compiled = fixture.nativeElement as HTMLElement;
-      // The empty state should be visible
+// The empty state should be visible
       expect(isEmptySignal()).toBe(true);
     });
   });

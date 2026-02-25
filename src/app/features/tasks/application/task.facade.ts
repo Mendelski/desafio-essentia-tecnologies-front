@@ -8,8 +8,8 @@ import {
   TaskFilter,
   TaskStatus,
   UpdateTaskData,
-} from '../domain/task.model';
-import { TaskApiService } from '../infrastructure/task.api';
+} from '../domain';
+import { TaskApiService } from '../infrastructure';
 
 export interface TaskError {
   message: string;

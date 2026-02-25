@@ -15,8 +15,8 @@ import { MatInput } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatOption, MatSelect } from '@angular/material/select';
 
-import { Task, TaskStatus } from '../../domain/task.model';
-import { TaskFacade } from '../../application/task.facade';
+import { Task, TaskStatus } from '../../domain';
+import { TaskFacade } from '../../application';
 
 export interface TaskFormDialogData {
   task?: Task;

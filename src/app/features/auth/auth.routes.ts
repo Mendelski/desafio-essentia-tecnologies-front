@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { guestGuard } from '../../core/auth';
+import { guestGuard } from '../../core';
 
 export const AUTH_ROUTES: Routes = [
   {

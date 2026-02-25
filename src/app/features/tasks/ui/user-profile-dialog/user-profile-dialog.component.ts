@@ -9,7 +9,7 @@ import {
 } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 
-import { AuthFacade } from '../../../../core/auth';
+import { AuthFacade } from '../../../../core';
 
 /**
  * Dialog component for displaying user profile information.

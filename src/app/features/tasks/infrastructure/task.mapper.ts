@@ -1,4 +1,4 @@
-import { PaginatedActivityLog, PaginatedTasks, Task, TaskActivityLog } from '../domain/task.model';
+import { PaginatedActivityLog, PaginatedTasks, Task, TaskActivityLog } from '../domain';
 import { PaginatedActivityLogDto, PaginatedTasksDto, TaskActivityLogDto, TaskDto } from './task.dto';
 
 /**

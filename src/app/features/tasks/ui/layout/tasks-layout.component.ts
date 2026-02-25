@@ -6,7 +6,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatTooltip } from '@angular/material/tooltip';
 
-import { AuthFacade } from '../../../../core/auth';
+import { AuthFacade } from '../../../../core';
 import { ThemeToggleComponent } from '../../../../shared';
 import { UserProfileDialogComponent } from '../user-profile-dialog';
 

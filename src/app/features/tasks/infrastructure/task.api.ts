@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
-import { ApiClientService } from '../../../core/http/api-client.service';
-import { ActivityLogFilter, CreateTaskData, PaginatedActivityLog, PaginatedTasks, Task, TaskFilter, UpdateTaskData } from '../domain/task.model';
-import { CreateTaskDto, PaginatedActivityLogDto, PaginatedTasksDto, SingleTaskResponseDto, TaskDto, UpdateTaskDto } from './task.dto';
+import { ApiClientService } from '../../../core';
+import { ActivityLogFilter, CreateTaskData, PaginatedActivityLog, PaginatedTasks, Task, TaskFilter, UpdateTaskData } from '../domain';
+import { CreateTaskDto, PaginatedActivityLogDto, PaginatedTasksDto, SingleTaskResponseDto, UpdateTaskDto } from './task.dto';
 import { TaskMapper } from './task.mapper';
 
 /**

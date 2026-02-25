@@ -1,0 +1,157 @@
+<div class="task-list-container">
+  <div class="task-list-header">
+    <div class="header-title">
+      <mat-icon class="header-icon">task_alt</mat-icon>
+      <div class="header-text">
+        <h1>My Tasks</h1>
+        <p class="task-count">
+          @if (total() === 0) {
+            No tasks yet
+          } @else if (total() === 1) {
+            1 task
+          } @else {
+            {{ total() }} tasks
+          }
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <mat-chip-listbox
+    class="filter-chips"
+    [attr.aria-label]="'Filter tasks by status'"
+    hideSingleSelectionIndicator
+  >
+    <mat-chip-option
+      [selected]="!filter().status"
+      (click)="onFilterChange('all')"
+    >
+      <span class="chip-content">
+        <mat-icon>list</mat-icon>
+        <span>All</span>
+      </span>
+    </mat-chip-option>
+    <mat-chip-option
+      [selected]="filter().status === 'pending'"
+      (click)="onFilterChange('pending')"
+    >
+      <span class="chip-content">
+        <mat-icon>schedule</mat-icon>
+        <span>Pending</span>
+      </span>
+    </mat-chip-option>
+    <mat-chip-option
+      [selected]="filter().status === 'completed'"
+      (click)="onFilterChange('completed')"
+    >
+      <span class="chip-content">
+        <mat-icon>check_circle</mat-icon>
+        <span>Completed</span>
+      </span>
+    </mat-chip-option>
+  </mat-chip-listbox>
+
+  @if (error(); as err) {
+    <div class="error-banner" role="alert">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ err.message }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="48" />
+      <p>Loading tasks...</p>
+    </div>
+  } @else if (isEmpty()) {
+    <div class="empty-state">
+      <div class="empty-illustration">
+        <mat-icon class="empty-icon">assignment</mat-icon>
+      </div>
+      <h2>No tasks found</h2>
+      <p>Create your first task and start organizing your day!</p>
+      <button mat-flat-button class="create-btn" (click)="onAdd()">
+        <mat-icon>add_circle</mat-icon>
+        <span>Create Task</span>
+      </button>
+    </div>
+  } @else {
+    <div class="task-list" role="list">
+      @for (task of tasks(); track trackById($index, task)) {
+        <mat-card
+          class="task-card"
+          [class.completed]="task.status === 'completed'"
+          appearance="outlined"
+          role="listitem"
+        >
+          <mat-card-content class="task-content">
+            <button
+              mat-icon-button
+              type="button"
+              class="status-toggle"
+              [class.is-completed]="task.status === 'completed'"
+              [attr.aria-label]="'Mark ' + task.title + ' as ' + (task.status === 'completed' ? 'pending' : 'completed')"
+              (click)="onToggleStatus(task)"
+            >
+              <mat-icon>
+                {{ task.status === 'completed' ? 'check_circle' : 'radio_button_unchecked' }}
+              </mat-icon>
+            </button>
+
+            <div class="task-info">
+              <span class="task-title" [class.completed]="task.status === 'completed'">
+                {{ task.title }}
+              </span>
+              @if (task.description) {
+                <span class="task-description">{{ task.description }}</span>
+              }
+              <div class="task-meta">
+                <span class="task-status" [class.status-completed]="task.status === 'completed'">
+                  <mat-icon class="meta-icon">
+                    {{ task.status === 'completed' ? 'check' : 'hourglass_empty' }}
+                  </mat-icon>
+                  {{ task.status === 'completed' ? 'Completed' : 'Pending' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="task-actions">
+              <button
+                mat-icon-button
+                type="button"
+                class="action-edit"
+                [attr.aria-label]="'Edit ' + task.title"
+                matTooltip="Edit task"
+                (click)="onEdit(task)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                type="button"
+                class="action-delete"
+                [attr.aria-label]="'Delete ' + task.title"
+                matTooltip="Delete task"
+                (click)="onDelete(task)"
+              >
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+
+  <button
+    mat-fab
+    extended
+    class="fab-add"
+    aria-label="Add new task"
+    (click)="onAdd()"
+  >
+    <mat-icon>add</mat-icon>
+    New Task
+  </button>
+</div>
+

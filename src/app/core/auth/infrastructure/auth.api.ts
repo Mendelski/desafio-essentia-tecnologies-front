@@ -74,7 +74,7 @@ export class AuthApiService {
    */
   me(): Observable<User> {
     return this.apiClient
-      .get<UserDto>('/me')
+      .get<UserDto>('/me', {})
       .pipe(map((response) => AuthMapper.toUser(response)));
   }
 }

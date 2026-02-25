@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 
@@ -16,9 +16,16 @@ export class ApiClientService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiBaseUrl;
 
-  get<T>(endpoint: string, options?: ApiRequestOptions): Observable<T> {
+  get<T>(endpoint: string, params?: Record<string, string>, options?: ApiRequestOptions): Observable<T> {
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        httpParams = httpParams.set(key, value);
+      });
+    }
+
     return this.http
-      .get<T>(`${this.baseUrl}${endpoint}`, this.buildOptions(options))
+      .get<T>(`${this.baseUrl}${endpoint}`, { ...this.buildOptions(options), params: httpParams })
       .pipe(catchError(this.handleError));
   }
 

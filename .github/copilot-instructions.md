@@ -73,3 +73,47 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Todolist API v1 Documentation
+
+Base URL: `{{base_url}}/api/v1` (configured in environment)
+
+### Auth Endpoints
+
+| Method | Endpoint    | Auth Required | Body                                                                 | Response                                      |
+|--------|-------------|---------------|----------------------------------------------------------------------|-----------------------------------------------|
+| POST   | `/register` | No            | `{ name, email, password, password_confirmation }`                   | `{ token, expires_at }`                       |
+| POST   | `/login`    | No            | `{ email, password }`                                                | `{ token, expires_at }`                       |
+| POST   | `/refresh`  | Yes (Bearer)  | -                                                                    | `{ token, expires_at }`                       |
+| POST   | `/logout`   | Yes (Bearer)  | -                                                                    | -                                             |
+| GET    | `/me`       | Yes (Bearer)  | -                                                                    | `{ id, name, email, created_at, updated_at }` |
+
+### Tasks Endpoints
+
+| Method | Endpoint       | Auth Required | Query Params            | Body                                      | Response                                                  |
+|--------|----------------|---------------|-------------------------|-------------------------------------------|-----------------------------------------------------------|
+| GET    | `/tasks`       | Yes (Bearer)  | `status`, `page`        | -                                         | Paginated list of tasks                                   |
+| POST   | `/tasks`       | Yes (Bearer)  | -                       | `{ title, description?, status }`         | Created task                                              |
+| GET    | `/tasks/:id`   | Yes (Bearer)  | -                       | -                                         | Task details                                              |
+| PUT    | `/tasks/:id`   | Yes (Bearer)  | -                       | `{ title?, description?, status? }`       | Updated task                                              |
+| DELETE | `/tasks/:id`   | Yes (Bearer)  | -                       | -                                         | -                                                         |
+
+### Task Model
+
+```typescript
+interface Task {
+  id: number;
+  title: string;
+  description: string | null;
+  status: 'pending' | 'completed';
+  created_at: string; // ISO date
+  updated_at: string; // ISO date
+}
+```
+
+### Headers
+
+All requests must include:
+- `Accept: application/json`
+- `Content-Type: application/json` (for POST/PUT)
+- `Authorization: Bearer {{token}}` (for protected routes)
